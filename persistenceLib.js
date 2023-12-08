@@ -1,5 +1,4 @@
 window.persistenceMap = new Map();
-
 window.persistenceDebug = false;
 
 window.persistenceLog = (msg) => {
@@ -23,13 +22,31 @@ window.tick = () => {
         if (attribute) {
             persistenceLog(`Found the persistence object ${attribute}`);
             let value = persistenceMap.get(attribute);
+
             if ((value !== null && value !== undefined) && (element.value !== undefined)) {
                 persistenceLog(`Found persisted value for the object "${attribute}" value: "${value}"`);
-                element.value = value;
+
+                switch (element.tagName) {
+                    case "INPUT":
+                        if (element.getAttribute("type").toLowerCase() == "checkbox") {
+                            element.checked = value;
+                        }
+                    case "TEXTAREA":
+                        element.value = value;
+                        break;
+                }
             }
 
-            element.addEventListener('input', (e) => { handleInput(attribute, e.target.value) })
-            element.addEventListener('propertychange', (e) => { handleInput(attribute, e.target.value) })
+            const dynamicHandle = (event) => {
+                if (element.getAttribute("type").toLowerCase() == "checkbox") {
+                    handleInput(attribute, event.target.checked);
+                    return;
+                }
+                handleInput(attribute, event.target.value);
+            }
+
+            element.addEventListener('input', dynamicHandle);
+            element.addEventListener('propertychange', dynamicHandle);
         }
     })
     persistenceLog("Tick End");
