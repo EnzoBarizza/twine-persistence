@@ -1,7 +1,7 @@
 # Twine Persistence
 ## Lib for persist data during gameplay in Twine
 
-> :warning: The only supported fields by now is: *input* and *textarea*
+> The only supported fields by now is: *input* and *textarea*
 
 ### Instalation
 Copy the content of file [libPersistence.js](persistenceLib.js) and paste inside `Story > JavaScript` in Twine
