@@ -28,7 +28,7 @@ window.tick = () => {
 
                 switch (element.tagName) {
                     case "INPUT":
-                        if (element.getAttribute("type").toLowerCase() == "checkbox") {
+                        if (element.getAttribute("type")?.toLowerCase?.() == "checkbox") {
                             element.checked = value;
                         }
                     case "TEXTAREA":
@@ -38,7 +38,7 @@ window.tick = () => {
             }
 
             const dynamicHandle = (event) => {
-                if (element.getAttribute("type").toLowerCase() == "checkbox") {
+                if (element.getAttribute("type")?.toLowerCase?.() == "checkbox") {
                     handleInput(attribute, event.target.checked);
                     return;
                 }
